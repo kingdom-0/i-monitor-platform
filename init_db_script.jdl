@@ -1,0 +1,1417 @@
+/**
+ * JHipster JDL model for iMonitorPlatform
+ */
+
+application {
+  config {
+    packageName com.jx.platform
+    baseName iMonitorPlatform
+    applicationType monolith
+    databaseType sql
+    authenticationType jwt
+    cacheProvider ehcache
+    enableHibernateCache true
+    websocket false
+  }
+  entities *
+}
+
+// ==============================
+// Entity definitions starts here
+// ==============================
+
+
+//entity Authority (jhi_authority){
+//	name String maxlength(50) required unique
+//	activated Boolean required
+//	createdBy String maxlength(50)
+//	createdDate Instant
+//	lastModifiedBy String maxlength(50)
+//	lastModifiedDate Instant
+//	description String maxlength(200)
+//}
+
+//entity Role(jhi_role){
+//	name String maxlength(50) required unique
+//	activated Boolean required
+//	createdBy String maxlength(50)
+//	createdDate Instant
+//	lastModifiedBy String maxlength(50)
+//	lastModifiedDate Instant
+//	description String maxlength(200)
+//}
+
+entity SystemModule(jhi_system_module){
+	name String required unique
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity SystemModuleItem(jhi_system_module_item){
+	name String required unique
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity Institution(jhi_institution){
+	name String required unique
+	contact String maxlength(30) required
+	phoneNumber String maxlength(30) required
+	address String maxlength(200) required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+
+enum InstitutionConfigureType{
+	VALUE_ADDED_SERVICE,
+	INTERFACE_SERVICE
+}
+
+entity InstitutionConfig(jhi_institution_config){
+	institutionConfigureType InstitutionConfigureType
+	configItemKey String
+	configItemValue String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity Province(jhi_province){
+	name String required unique
+	areaCode Integer required unique
+	longitude String maxlength(15)
+	latitude String maxlength(15)
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity City(jhi_city){
+	name String required unique
+	areaCode Integer required unique
+	longitude String maxlength(15)
+	latitude String maxlength(15)
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity Area(jhi_area){
+	name String maxlength(50) required unique
+	areaCode Integer required unique
+	longitude String maxlength(15)
+	latitude String maxlength(15)
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity LoginInfo(jhi_login_info){
+	ip String maxlength(50)
+	address String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(100)
+}
+
+enum AdminOperationType{
+	ADD,
+	UPDATE,
+	DELETE
+	OTHER
+}
+
+enum AdminOperationSource{
+	MINI_PROGRAM,
+	PC,
+	APP,
+	UNKNOWN
+}
+
+entity AdminOperationLog(jhi_admin_operation_log){
+	adminOperationSource AdminOperationSource
+	adminOperationType AdminOperationType
+	content String maxlength(300)
+	result Boolean
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(100)
+}
+
+entity Admin (jhi_admin){
+	nickName String
+	address String
+	managedArea String maxlength(300)
+	region String
+	phoneNumber String unique pattern(/^1\d{10}/)
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum AdminDefinedConfigType{
+	SYATEM_NOTIFICATION,
+	SYATEM_CONFIGURATION,
+	DEVICE,
+	VOLUNTEER
+}
+
+entity AdminConfig(jhi_admin_config){
+	adminNotificationConfigType AdminDefinedConfigType
+	configItemKey String
+	configItemValue String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum MessageState{
+	READ,
+	UNREAD,
+	UNKNOWN
+}
+
+entity AdminReceivedMessage(jhi_admin_received_message){
+	systemNotificationType SystemNotificationType
+	notificationMessageLevel NotificationMessageLevel
+	content String
+	messageState MessageState
+	occurTime Instant
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity WeiXinAccount{
+	openId String
+	appId String
+	unionId String
+	sessionKey String
+	nickName String
+	avatarUrl String
+	region String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum LockType{
+	BLUETOOTH,
+	ELECTRONIC
+	UNKNOWN
+}
+
+entity BluetoothLock(jhi_bluetooth_lock){
+	serialNumber String maxlength(15) required
+	macAddress String maxlength(20) required
+	secretKey String maxlength(50) required
+	password String maxlength(10) required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity ElectronicLock(jdl_electronic_lock){
+	serialNumber String maxlength(15) required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+
+}
+
+enum Gender{
+	UNKNOWN,MAN,WOMAN
+}
+
+enum CertificateState{
+	UNKNOWN,VALID,INVALID
+}
+
+entity Volunteer(jhi_volunteer){
+	firstName String maxlength(50)
+	lastName String maxlength(50)
+	nickName String maxlength(50)
+	phoneNumber String unique pattern(/^1\d{10}/)
+	email String unique pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+	gender Gender
+	birthDate Instant
+	age Integer
+	mainMomentAreaLongitude String maxlength(15)
+	mainMomentAreaLatitude String maxlength(15)
+	latestObtainedLongitude String maxlength(15)
+	latestObtainedLatitude String maxlength(15)
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum VolunteerCertificateType{
+	REDCROSS,AHA,FIRSTAID120,JOUSING,UNKNOWN
+}
+
+enum AuditState{
+	INPROCESS,PASS,FAIL,UNKNOWN
+}
+
+entity VolunteerCertificate(jhi_volunteer_certificate){
+	volunteerCertificateType VolunteerCertificateType
+	awardingBody String maxlength(50)
+	certificateNumber String maxlength(30)
+	certificateReleaseDate Instant
+	certificateExpireDate Instant
+	certificateState CertificateState
+	auditState AuditState
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity VolunteerHonorInfo(jhi_volunteer_honor_info){
+	obtainedHonorDate Instant
+	address String maxlength(200)
+	honorContent String maxlength(200)
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//TODO ADD PROPERTY
+entity VolunteerLearningRecord(jhi_volunteer_study_record){
+
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//TODO ADD PROPERTY
+entity VolunteerExamRecord(jhi_volunteer_exam_record){
+
+	score String required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//TODO ADD PROPERTY
+entity VolunteerRescueRecord(jhi_volunteer_rescue_record){
+
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//TODO ADD PROPERTY
+entity VolunteerAccumulatedRewardPointsRecord(jhi_volunteer_reward_points){
+
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum LearningDataType{
+	TEXT,IMAGE,VIDEO
+}
+
+entity LearningData(jhi_learning_data){
+	title String maxlength(100) required
+	content String maxlength(200) required
+	learningDataType LearningDataType required
+	resoucePath String maxlength(100)
+	orderNumber Integer
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity ExamPaper(jhi_exam_paper){
+	question String maxlength(100) required
+	optionA String maxlength(100) required
+	optionB String maxlength(100) required
+	optionC String maxlength(100) required
+	answer String required
+	orderNumber Integer
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//TODO ADD OTHER BRAND
+enum DeviceBrand{
+	JOUSING,
+	MINDRAY,
+	ZOLL,
+	PRIMEDIC,
+	LIFEPAK,
+	PHILIPS,
+	UNKNOWN
+}
+
+entity DeviceFirmware(jhi_device_firmware){
+	version String maxlength(30) required
+	path String maxlength(100) required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity CabinetControllerFirmware(jhi_cabinet_firmware){
+	version String maxlength(30) required
+	path String maxlength(100) required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity ConnectorFirmware(jhi_connector_firmware){
+	version String maxlength(30) required
+	path String maxlength(100) required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum CommunicationModuleType{
+	CONTROLLER,
+	CONNECTOR
+	UNKNOWN
+}
+
+enum NetworkMode{
+	GPRS,
+	G4,
+	UNKNOWN
+}
+
+enum PowerSupplyMode{
+	AC,
+	DC,
+	UNKNOWN
+}
+
+enum TerminalRunningState{
+	NORMAL,
+	ABNORMAL,
+	UNKNOWN
+}
+
+enum SimCardOperatorType{
+	MOBILE,
+	UNICOM,
+	TELECOM,
+	UNKNOWN
+}
+
+//TODO, check property
+entity CabinetController(jhi_cabinet_controller){
+	serialNumber String required
+	firmwareVersion String
+	bootloaderVersion String
+	networkMode NetworkMode
+	powerSupplyMode PowerSupplyMode
+	termianlRunningState TerminalRunningState
+	simCardNumber String
+	simCardOperatorType SimCardOperatorType
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum CabinetControllerSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	BATTERY_LOW,
+	BATTERY_RUNOUT
+}
+
+enum ConnectorSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	BATTERY_LOW,
+	BATTERY_RUNOUT
+}
+
+enum BluetoothModuleSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	ABNORMAL
+}
+
+enum FourGModuleSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	ABNORMAL
+}
+enum FlashSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	ABNORMAL
+}
+enum LocationModuleSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	ABNORMAL
+}
+
+enum AudioModuleSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	ABNORMAL
+}
+
+enum TfCardSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	ABNORMAL,
+	NOT_INSERT,
+	INVALID_CARD,
+	MEMORY_FULL
+}
+
+entity CabinetControllerSelfTestData(jhi_controller_selfTest_data){
+	selfTestTime Instant required
+	selfTestResult CabinetControllerSelfTestResult required
+	batteryVoltage String required
+	bluetoothModuleSelfTestResult BluetoothModuleSelfTestResult
+	fourGModuleSelfTestResult FourGModuleSelfTestResult
+	fourGSignalStrength String
+	flashSelfTestResult FlashSelfTestResult
+	locationModuleSelfTestResult LocationModuleSelfTestResult
+	audioModuleSelfTestResult AudioModuleSelfTestResult
+	tfCardSelfTestResult TfCardSelfTestResult
+	tfCardSerialNumber String
+	tfCardTotalCapacity String
+	tfCardRemainingCapacity String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity CabinetControllerHistoryLog(jhi_controller_history_log){
+	name String
+	content String
+	commandCode String
+	orderNumber Integer required
+	parameter String
+	generatedDate Instant
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//TODO check property
+entity Connector(jhi_connector){
+	serialNumber String required
+	firmwareVersion String
+	bootloaderVersion String
+	networkMode NetworkMode
+	powerSupplyMode PowerSupplyMode
+	termianlRunningState TerminalRunningState
+	simCardNumber String
+	simCardOperatorType SimCardOperatorType
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//TODO, check property
+entity ConnectorSelfTestData(jhi_connector_selfTest_data){
+	selfTestTime Instant required
+	selfTestResult ConnectorSelfTestResult required
+	batteryVoltage String required
+	bluetoothModuleSelfTestResult BluetoothModuleSelfTestResult
+	fourGModuleSelfTestResult FourGModuleSelfTestResult
+	fourGSignalStrength String
+	flashSelfTestResult FlashSelfTestResult
+	locationModuleSelfTestResult LocationModuleSelfTestResult
+	audioModuleSelfTestResult AudioModuleSelfTestResult
+	tfCardSelfTestResult TfCardSelfTestResult
+	tfCardSerialNumber String
+	tfCardTotalCapacity String
+	tfCardRemainingCapacity String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity ConnectorHistoryLog(jhi_connector_history_log){
+	name String
+	content String
+	commandCode String
+	orderNumber Integer required
+	parameter String
+	generatedDate Instant
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum DeviceBluetoothConnectionState{
+	CONNECTED,
+	DISCONNECTED,
+	UNKNOWN
+}
+
+enum TaskType{
+	UPDATE_DEVICE_FIRMWARE,
+	SET_PARAMETER,
+	ALARM,
+	EXIT_NETWORK,
+	UPDATE_CABINET_FIRMWARE,
+	SET_FORCE_WAKEUP_TIME,
+	UPDATE_UPLOADING_REALTIME_DATA_TYPE,
+	SETTING_POSITIONING_MODE,
+	SETTING_SERVER_INFO,
+	SETTING_CELL_TRACK_SERVER_INFO,
+	SETTING_MATCH_MODE
+}
+
+enum TaskState{
+	EXECUTING,
+	EXECUTE_SUCCESSFULLY,
+	EXECUTE_FAILURE,
+	READY_TO_EXECUTE,
+	CANCELLED
+}
+
+entity Task(jhi_task){
+	name String required
+	taskType TaskType
+	taskState TaskState
+	estimateToExecuteDate Instant
+	taskParameter String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum DeviceState{
+	NORMAL,
+	ABNORMAL,
+	UNKNOWN
+}
+
+enum CabinetDoorState{
+	OPENED,
+	CLOSED,
+	UNKNOWN
+}
+
+entity DeviceUploadDataTimeConfig(jhi_device_upload_data_time_config){
+	week Integer required
+	hour Integer required
+	maxCount Integer required
+	minCount Integer required
+	latestAddPointAtMinute Integer required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity DeviceUploadDataTimeStatistics(jhi_device_upload_data_time_statistics){
+	week Integer required
+	hour Integer required
+	minute Integer required
+	currentDeviceCount Integer required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//TODO,ADD PROPERTY
+enum EntityEventType{
+	DEVICE_IN_POSITION,
+	DEVICE_OUT_OF_POSITION,
+	DEVICE_TO_NETWORK,
+	DEVICE_ADD_INFO,
+	DEVICE_SELF_TEST_ABNORMAL,
+	DEVICE_NOT_SELF_TEST_ON_TIME,
+	DEVICE_START_REALTIME_DATA_TRANSFER,
+	DEVICE_FINISH_REALTIME_DATA_TRANSFER,
+	DEVICE_ELECTRODE_EXPIRED,
+	DEVICE_DOOR_OPENED,
+	DEVICE_DOOR_CLOSED,
+	CABINET_ALARM,
+	TERMINAL_SELF_TEST_ABNORMAL,
+	DEVICE_BAG_OPENED,
+	DEVICE_BAG_CLOSED,
+	DEVICE_BLUETOOTH_LOCK_OPEN_SUCCESS,
+	DEVICE_BLUETOOTH_LOCK_CLOSE_SUCCESS,
+	DEVICE_BLUETOOTH_LOCK_OPEN_FAIL,
+	DEVICE_BLUETOOTH_LOCK_CLOSE_FAIL,
+	DEVICE_NETWORK_LOCK_OPEN_SUCCESS,
+	DEVICE_NETWORK_LOCK_CLOSE_SUCCESS,
+	DEVICE_NETWORK_LOCK_OPEN_FAIL,
+	DEVICE_NETWORK_LOCK_CLOSE_FAIL,
+	DEVICE_IN_FENCE,
+	DEVICE_OUT_OF_FENCE,
+	DEVICE_START_UPLOAD_DATA_ON_TIME,
+	DEVICE_FINISH_UPLOAD_DATA_ON_TIME,
+	VOLUNTEER_LICENSE_CHECK,
+	ONE_KEY_CALL_FOR_HELP,
+	DEVICE_OPEN_MATCH_MODE,
+	DEVICE_CLOSE_MATCH_MODE,
+	DEVICE_BATTERY_EXPIRED,
+	DEVICE_ELECTRODE_EXPIRED,
+	UNKNOWN
+}
+
+enum EventLevel{
+	COMMON,SERIOUS,URGENCY
+}
+
+enum EventSource{
+	AED,CABINET,UNKNOWN
+}
+
+entity EntityEvent(jhi_system_event){
+	eventSource EventSource
+	sourceId String
+	entityEventType EntityEventType
+	eventLevel EventLevel
+	content String required
+	address String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum MaintainType{
+	ADD_INFO,
+	OTHER
+}
+
+entity DeviceMaintainRecord(jhi_device_maintain_record){
+	username String
+	phoneNumber String unique pattern(/^1\d{10}/)
+	maintainType MaintainType
+	content String required
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//Device that is not connected to network inspection record
+entity DeviceInspectionRecord(jhi_device_inspection_record){
+	username String
+	content String required
+	imagePath String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum ProblemHandleProcess{
+	UNHANDLE,
+	HANGLEING,
+	HANGLED
+}
+
+entity ReportToRepairRecord{
+	username String
+	content String
+	problemHandleProcess ProblemHandleProcess
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum RescueDataUploadType{
+	TIMED,
+	REAL_TIME,
+	UNKNOWN
+}
+
+entity DeviceRescueData(jhi_device_rescue_data){
+	rescueNumber Integer
+	startTime Instant
+	endTime Instant
+	receivedAll Boolean
+	rescueDataUploadType RescueDataUploadType
+	encryptedDataPath String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity DeviceHistoryLog(jhi_device_history_log){
+	eventTitle String
+	eventContent String
+	rawData String
+	eventParameter String
+	logTime Instant
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+
+}
+
+enum DeviceSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	ABNORMAL
+}
+
+enum TemperatureSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	ABNORMAL
+}
+
+enum BatterySelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	ABNORMAL
+}
+
+enum HardwareSelfTestResult{
+	UNKNOWN,
+	NORMAL,
+	POWER_LOW,
+	POWER_RUN_OUT
+}
+
+entity DeviceElectrodeInfo(jhi_device_electrode_info){
+	serialNumber String
+	expiredTime Instant
+	model String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity DeviceBatteryInfo(jhi_device_battery_info){
+	serialNumber String
+	batteryPower String
+	producedDate Instant
+	activatedDate Instant
+	model String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity DeviceSelfTestData(jhi_device_self_test_data){
+	deviceState DeviceState
+	deviceSelfTestResult DeviceSelfTestResult
+	batterySelfTestResult BatterySelfTestResult
+	temperatureSelfTestResult TemperatureSelfTestResult
+	hardwareSelfTestResult HardwareSelfTestResult
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum DevicePositionState{
+	IN_POSITION,
+	OUT_OF_POSITION,
+	UNKNOWN
+}
+
+//Log related to communication protocol
+entity DeviceCommunicationLog{
+	fileName String
+	fileSize String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+//TODO check properties
+entity Device(jhi_device){
+	brand DeviceBrand required
+	model String maxlength(20)
+	serialNumber String
+	address String
+	firmwareVersion String
+	bootloaderVersion String
+	batterySerialNumber String
+	deviceState DeviceState
+	deviceBluetoothConnectionState DeviceBluetoothConnectionState
+	selfTestResult DeviceSelfTestResult
+	temperatureSelfTestResult TemperatureSelfTestResult
+	hardwareSelfTestResult HardwareSelfTestResult
+	deployAreaLongitude String maxlength(15)
+	deployedAreaLatitude String maxlength(15)
+	latestObtainedLongitude String maxlength(15)
+	latestObtainedLatitude String maxlength(15)
+	cabinetDoorState CabinetDoorState
+	devicePositionState DevicePositionState
+	lockType LockType
+	lockId String
+	communicationModuleType CommunicationModuleType
+	communicationModuleId String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+
+}
+
+entity DeviceAdditionalInfo(jhi_device_additional_info){
+	deliveryDate Instant
+	contact String
+	phoneNumber String
+	produceDate Instant
+	batteryBatchNumber String
+	batterySerialNumber String
+	batteryExpiredDate Instant
+	electrodeBatchNumber String
+	electrodeExpiredDate Instant
+	capacitanceSerialNumber String
+	mainboardSerialNumber String
+	ledBoardSerialNumber String
+	deviceBatchNumber String
+	assembleDate Instant
+	periodOfValidity Instant
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum EntityConfigType{
+	UPDATE_FIRMWARE,
+	WEAK_UP_MODE,
+	SELF_TEST_TIME
+	//TODO ADD OTHER TYPE
+
+}
+
+entity EntityConfig(jhi_entity_config){
+	entityConfigType EntityConfigType
+	parameter String//KEY-VALUE PAIR
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum AgencyLevel{
+	LEVEL_ONE,
+	LEVEL_TWO,
+	LEVEL_THREE
+}
+entity Agency(jhi_agency){
+	name String required
+	agencyLevel AgencyLevel
+	address String
+	region String
+	contact String
+	phoneNumber String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum InspectionReportType{
+	YEARLY,
+	HALF_YEARLY,
+	QUARTERLY,
+	MONTHLY,
+	WEEKLY,
+	DAYLY
+}
+
+enum InspectionReportSendState{
+	SUCCESS,
+	FAIL,
+	UNKNOWN
+}
+
+entity InstitutionInspectionReport(jhi_institution_inspect_report){
+	inspectionReportSendState InspectionReportSendState
+	sendDate Instant
+	inspectionReportType InspectionReportType
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum OneKeyForHelpRecordState{
+	SENDED,
+	NOTIFIED,
+	RECEIVED,
+	FINISHED,
+	UNKNOWN
+}
+
+entity OneKeyForHelpRecord(jhi_one_key_for_help_record){
+	callForHelpTime Instant
+	address String required
+	longitude String
+	latitude String
+	oneKeyForHelpRecordState OneKeyForHelpRecordState
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum VolunteerReceivedCommandType{
+	SEEK_DEVICE,
+	READY_TO_EXECUTE_CPR,
+	UNKNOWN
+}
+
+enum HelpSeekedVolunteerResponseType{
+	ACCEPTED,
+	REFUSED,
+	UNHANDLED,
+	UNKNOWN
+}
+
+entity SolutionRescueEvent(jhi_solution_rescue_event){
+	content String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity OneKeyForHelpResponseInfo(jhi_rescue_response_info){
+	volunteerReceivedCommandType VolunteerReceivedCommandType
+	receivedTime Instant
+	helpSeekedVolunteerResponseType HelpSeekedVolunteerResponseType
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+entity RescueConfig(jhi_one_key_for_help_config){
+	configItemKey String
+	configItemValue String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum CompetitionGuaranteeState{
+	UNSTARTED,
+	GUARANTEE_NORMAL,
+	GUARANTEE_RESCUE,
+	FINISHED,
+	UNKNOWN
+}
+
+entity CompetitionGuaranteeRecord(jhi_competition_record){
+	competitionName String required
+	address String
+	competitionGuaranteeState CompetitionGuaranteeState
+	startTime Instant required
+	endTime Instant required
+
+}
+
+enum SmsMessageType{
+	DEVICE_OUT_OF_GUARANTEE_PERIOD,
+    ELECTRODE_SLICE_CLOSE_TO_EXPIRATION,
+    ELECTRODE_SLICE_EXPIRED
+    //TODO, ADD TYPE.
+}
+enum SmsSendState{
+	SUCCESS,
+    FAIL,
+    UNKNOWN
+}
+entity SmsSendedRecord(jhi_sms_sended_record){
+	phoneNumber String
+    smsTemplateCode String
+    smsMessageType SmsMessageType
+    sendTime Instant
+    content String
+    smsSendState SmsSendState
+    createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum VmsMessageType{
+	ONE_KEY_FOR_HELP
+    //TODO, ADD TYPE.
+}
+enum VmsSendState{
+	SUCCESS,
+    FAIL,
+    UNKNOWN
+}
+
+entity VmsSendedRecord(jhi_vms_sended_record){
+	sponsorPhoneNumber String
+	calledPhoneNumber String
+    calledTime Instant
+    vmsTemplateCode String
+    vmsMessageType VmsMessageType
+    content String
+    vmsSendState VmsSendState
+    createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum EmailMessageSendingPeriod{
+	PERIODIC_REPORT_YEARLY,
+	PERIODIC_REPORT_QUARTERLY,
+	PERIODIC_REPORT_MONTHLY,
+	PERIODIC_REPORT_WEEKLY,
+	PERIODIC_REPORT_DAYLY
+}
+
+enum EmailSendState{
+	SUCCESS,
+    FAIL,
+    UNKNOWN
+}
+
+entity EmailSendedRecord(jhi_email_sended_record){
+	sendTime Instant
+	emailTemplateCode String
+	emailMessageSendingPeriod EmailMessageSendingPeriod
+	content String
+	emailSendState EmailSendState
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum SystemLogLevel{
+	EMERGENCY,//会导致主机系统不可用的情况
+	ALERT,//必须马上采取措施解决的问题
+	CRITICAL,//比较严重的情况
+	ERROR,//运行出现错误
+	WARNING,//可能会影响系统功能的事件
+	NOTICE,//不会影响系统但值得注意
+	INFO,//一般信息
+	DEBUG//程序或系统调试信息等
+}
+
+entity SystemRunningLog(jhi_system_running_log){
+	occurTime Instant
+	systemLogLevel SystemLogLevel
+	content String
+	activated Boolean required
+	description String maxlength(200)
+}
+
+enum AuditLogType{
+	ENTITY_ADD,
+	ENTITY_EDIT,
+	ENTITY_DELETE
+}
+
+entity SystemAuditLog(jhi_system_audit_log){
+	principal String
+	auditEventDate Instant
+	auditLogType AuditLogType
+	content String
+	createDate Instant
+	description String
+}
+
+enum NotificationMessageLevel{
+	INFO,//一般信息
+	WARNING,//可能会影响系统功能的事件
+	ERROR,//运行出现错误
+	DEBUG,
+	TRACE
+}
+
+entity NotificationMessage(jhi_notification_message){
+	name String
+	code String
+	applicationModule String
+	messageLevel NotificationMessageLevel
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+enum SystemNotificationType{
+	APPLICATION,
+	ROLE,
+	DEVICE,
+	VOLUNTEER
+}
+
+entity SystemDefaultConfig(jhi_system_default_config){
+	systemNotificationType SystemNotificationType
+	configItemKey String
+	configItemValue String
+	activated Boolean required
+	createdBy String maxlength(50)
+	createdDate Instant
+	lastModifiedBy String maxlength(50)
+	lastModifiedDate Instant
+	description String maxlength(200)
+}
+
+// defining multiple oneToOne relationships
+relationship OneToOne {
+    //Admin{role} to Role
+	Admin{innerAccout} to User
+    Device{province} to Province
+    Device{city} to City
+    Device{area} to Area
+    Institution{config} to InstitutionConfig{institution}
+    Admin{volunteer} to Volunteer{admin}
+    Device{firmware} to DeviceFirmware
+    CabinetController{firmware} to CabinetControllerFirmware
+    Connector{firmware} to ConnectorFirmware
+    Device{electrodeInfo} to DeviceElectrodeInfo{device}
+    Device{batteryInfo} to DeviceBatteryInfo{device}
+    DeviceSelfTestData{electrodeInfo} to DeviceElectrodeInfo{deviceSelfTestData}
+    DeviceSelfTestData{batteryInfo} to DeviceBatteryInfo{deviceSelfTestData}
+    Device{additionalInfo} to DeviceAdditionalInfo{device}
+
+    OneKeyForHelpRecord{caller required} to Volunteer{calForHelpRecord}
+    OneKeyForHelpResponseInfo{volunteer required} to Volunteer{responseCallForHelpRecord}
+    Admin{weixinAccount} to WeiXinAccount{admin}
+}
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+    //Role{authorities} to Authority
+	SystemModule{moduleItems} to SystemModuleItem{module}
+	//TODO: ADD CONFIGURE TO PROJECT
+	//Authority{items} to SystemModuleItem{module}
+    Province{cities} to City{province}
+	City{areas} to Area{city}
+    Institution{devices} to Device
+    Institution{admins} to Admin{institution}
+    Admin{loginInfo} to LoginInfo{admin}
+    Admin{activatedDevices} to Device{activatedBy}
+    Admin{adminOperationLogs} to AdminOperationLog{operationUser}
+	Admin{emailRecords} to EmailSendedRecord{admin}
+    Volunteer{honorInfo} to VolunteerHonorInfo{volunteer}
+    Volunteer{learningRecords} to VolunteerLearningRecord{volunteer}
+    Volunteer{examRecords} to VolunteerExamRecord{volunteer}
+    Volunteer{rescueRecords} to VolunteerRescueRecord
+	Volunteer{certificates} to VolunteerCertificate{volunteer}
+    Volunteer{rewardPointsRecords} to VolunteerAccumulatedRewardPointsRecord{volunteer}
+    CabinetController{selfTestData} to CabinetControllerSelfTestData{controller}
+    CabinetController{historyLogs} to CabinetControllerHistoryLog{controller}
+    CabinetController{configures} to EntityConfig{controller}
+    Device{tasks} to Task{device}
+    CabinetController{tasks} to Task{controller}
+    Connector{tasks} to Task{connector}
+    Connector{historyLogs} to ConnectorHistoryLog{connector}
+    Connector{selfTestData} to ConnectorSelfTestData{connector}
+    Connector{configures} to EntityConfig{connector}
+    Admin{maintainRecords} to DeviceMaintainRecord{admin}
+    Device{events} to EntityEvent{device}
+    Device{configures} to EntityConfig{device}
+    Device{selfTestData} to DeviceSelfTestData{device}
+    Device{communicationLogs} to DeviceCommunicationLog{device}
+    Device{inspectionRecords} to DeviceInspectionRecord{device}
+    Institution{reports} to InstitutionInspectionReport{institution}
+    OneKeyForHelpRecord{responseInfo} to OneKeyForHelpResponseInfo{record}
+    OneKeyForHelpRecord{configures} to RescueConfig{record}
+    OneKeyForHelpRecord{rescueEvents} to SolutionRescueEvent{record}
+    CompetitionGuaranteeRecord{assignedDevices required} to Device
+    CompetitionGuaranteeRecord{assignedVolunteer required} to Volunteer
+    CompetitionGuaranteeRecord{rescueEvents} to SolutionRescueEvent
+    CompetitionGuaranteeRecord{configures} to RescueConfig
+    //Role{messages} to NotificationMessage
+    Admin{configures} to AdminConfig
+    Admin{messages} to AdminReceivedMessage
+	Institution{children} to Institution{parent}
+
+}
+
+relationship ManyToMany {
+    //Institution{parents required} to Institution{children}
+	Device{agencies} to Agency{devices}
+}
+
+
+
+//relationship ManyToOne {
+    //Institution{parents} to Institution
+//}
+
+
+// =======
+// Options
+// =======
+
+// Set pagination options
+//paginate ? with infinite-scroll
+paginate * with pagination
+
+dto * with mapstruct
+
+// Set service options to all
+//service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with mySuffix
